@@ -17,3 +17,8 @@
 
 - Nome Sobrenome: Pedro Soares de Souza
 - RM: 571285
+
+<br>
+
+- Nome Sobrenome: Olavo Dadario Vianna Barreto
+- RM: 569272
