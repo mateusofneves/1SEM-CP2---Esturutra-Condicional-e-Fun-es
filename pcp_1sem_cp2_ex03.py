@@ -6,7 +6,7 @@ nota_cp1 = float(input('Digite a nota da CP-1: '))
 nota_cp2 = float(input('Digite a nota da CP-2: '))
 nota_cp3 = float(input('Digite a nota da CP-3: '))
 nota_sp1 = float(input('Digite a nota da Sprint 1 (sp1): '))
-nota_sp2 = float(input('Digite a nota da Sprint 2 (sp1): '))
+nota_sp2 = float(input('Digite a nota da Sprint 2 (sp2): '))
 nota_gs  = float(input('Digite a nota da Global Solution (gs): '))
 print(f'\n')
 
@@ -14,11 +14,11 @@ print(f'\n')
 menor = 0
 
 #condicionais de verificacao para ver qual a menor nota entre os checkpoints
-if nota_cp1 < nota_cp2 and nota_cp1 < nota_cp3 and nota_cp1 < nota_sp1 and nota_cp1 < nota_sp2 and nota_cp1 < nota_gs:
+if nota_cp1 <= nota_cp2 and nota_cp1 <= nota_cp3:
     menor = nota_cp1
-elif nota_cp2 < nota_cp1 and nota_cp2 < nota_cp3 and nota_cp2 < nota_sp1 and nota_cp2 < nota_sp2 and nota_cp2 < nota_gs:
+elif nota_cp2 <= nota_cp1 and nota_cp2 <= nota_cp3:
     menor = nota_cp2
-elif nota_cp3 < nota_cp2 and nota_cp3 < nota_cp1 and nota_cp3 < nota_sp1 and nota_cp3 < nota_sp2 and nota_cp3 < nota_gs:
+elif nota_cp3 <= nota_cp2 and nota_cp3 <= nota_cp1:
     menor = nota_cp3
 
 #variaveis armazenando as notas medias com e sem peso
