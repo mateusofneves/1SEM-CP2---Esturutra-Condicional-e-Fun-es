@@ -1,4 +1,4 @@
-# 1SEM-CP2-Esturutra-Condicional-e-Funções
+# 1SEM-CP2-Estrutura-Condicional-e-Funções
 
 - Nome Sobrenome: Mateus de Oliveira Fernandes Neves
 - RM: 572431
