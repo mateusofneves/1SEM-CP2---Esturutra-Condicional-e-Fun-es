@@ -1,123 +1,47 @@
-# criação das primeiras 3 variaveis. CE = Codigo do estado. Peso = Peso da carga. CC = Codigo da carga
-CE = int(input("Informe o Codigo do estado de origem: "))
+# Entrada de dados
+CE = int(input("Informe o Código do estado de origem (1 a 5): "))
+peso = float(input("Digite o peso da carga em toneladas: "))
+CC = int(input("Digite o código da carga (10 a 40): "))
 
-Peso = float(input("Digite o Peso da carga em toneladas: "))
+# Conversão toneladas -> kg
+peso_kg = peso * 1000
 
-CC = int(input("Digite o codigo da carga: "))
+# Definição do preço por kg
+if 10 <= CC <= 20:
+    preco_por_kg = 100
+elif 21 <= CC <= 30:
+    preco_por_kg = 250
+elif 31 <= CC <= 40:
+    preco_por_kg = 340
+else:
+    print("Código de carga inválido!")
+    exit()
 
-#Calculo para converter toneladas para quilogramas
-Tone_Kq = Peso * 1000
+# Definição do imposto por estado
+impostos = {
+    1: 0.35,
+    2: 0.25,
+    3: 0.15,
+    4: 0.05,
+    5: 0.0
+}
 
-#criacao dos "e se"
-if(CC >= 10 and CC <= 20):
-    # calculo para retirar o preço bruto da carga
-    preco_Kq = Tone_Kq * 100
-    if(CE == 1):
-        #calculo do imposto
-        imposto = preco_Kq * 0.35
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}. \n Preço da carga do caminhao {preco_Kq:.2f}.\n "
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f} \n ")
+if CE not in impostos:
+    print("Código de estado inválido!")
+    exit()
 
-    elif(CE == 2):
-        imposto = preco_Kq * 0.25
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}. \n Preço da carga do caminhao {preco_Kq:.2f}. \n "
-              f"Valor do imposto: {imposto:.2f}. \n Valor total: {valor_total:.2f} \n")
+# Cálculos
+preco_total = peso_kg * preco_por_kg
+imposto = preco_total * impostos[CE]
+valor_total = preco_total + imposto
 
-    elif (CE == 3):
-        imposto = preco_Kq * 0.15
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}.\n Preço da carga do caminhao {preco_Kq:.2f}. \n "
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f} \n")
-
-    elif (CE == 4):
-        imposto = preco_Kq * 0.05
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}.\n Preço da carga do caminhao {preco_Kq:.2f}.\n "
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f} \n ")
-
-    elif (CE == 5):
-        imposto = preco_Kq
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}.\n Preço da carga do caminhao {preco_Kq:.2f}.\n "
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f} \n")
-
-    elif (CE >= 6):
-        print(f"DIGITE UM CODIGO DE ESTADO VALIDO!!")
-
-
-if(CC >= 21 and CC <= 30):
-    preco_Kq = Tone_Kq * 250
-    if (CE == 1):
-        imposto = preco_Kq * 0.35
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}.\n Preço da carga do caminhao {preco_Kq:.2f}.\n "
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f} \n")
-
-    elif (CE == 2):
-        imposto = preco_Kq * 0.25
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}.\n Preço da carga do caminhao {preco_Kq:.2f}.\n "
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f} \n")
-
-    elif (CE == 3):
-        imposto = preco_Kq * 0.15
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}.\n Preço da carga do caminhao {preco_Kq:.2f}.\n "
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f} \n")
-
-    elif (CE == 4):
-        imposto = preco_Kq * 0.05
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}.\n Preço da carga do caminhao {preco_Kq:.2f}.\n "
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f}\n ")
-
-    elif (CE == 5):
-        imposto = preco_Kq
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}.\n Preço da carga do caminhao {preco_Kq:.2f}.\n "
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f} \n")
-    elif (CE >= 6):
-        print(f"DIGITE UM CODIGO DE ESTADO VALIDO!!")
-
-if(CC >= 31 and CC <= 40):
-    preco_Kq = Tone_Kq * 340
-    if (CE == 1):
-        imposto = preco_Kq * 0.35
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}.\n Preço da carga do caminhao {preco_Kq:.2f}.\n "
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f} \n")
-
-    elif (CE == 2):
-        imposto = preco_Kq * 0.25
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}.\n Preço da carga do caminhao {preco_Kq:.2f}.\n "
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f}\n ")
-
-    elif (CE == 3):
-        imposto = preco_Kq * 0.15
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}.\n Preço da carga do caminhao {preco_Kq:.2f}.\n "
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f}\n ")
-
-    elif (CE == 4):
-        imposto = preco_Kq * 0.05
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}.\n Preço da carga do caminhao {preco_Kq:.2f}. \n"
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f} \n")
-
-    elif (CE == 5):
-        imposto = preco_Kq
-        valor_total = imposto + preco_Kq
-        print(f"Peso da carga em Kq: {Tone_Kq:.2f}.\n Preço da carga do caminhao {preco_Kq:.2f}.\n "
-              f"Valor do imposto: {imposto:.2f}.\n Valor total: {valor_total:.2f} \n")
-
-    elif (CE >= 6):
-        print(f"DIGITE UM CODIGO DE ESTADO VALIDO!!")
-
-
-
+# Saída
+print(f"""
+Peso da carga em kg: {peso_kg:.2f}
+Preço da carga: {preco_total:.2f}
+Imposto: {imposto:.2f}
+Valor total: {valor_total:.2f}
+""")
 
 
 
