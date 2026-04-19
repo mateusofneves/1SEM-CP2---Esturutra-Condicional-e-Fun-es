@@ -2,116 +2,92 @@ import math
 
 
 def pode_aprovar(idade, renda, valor):
-    """
-    Verifica se o cliente atende aos requisitos básicos de aprovação:
-    - Ter mais de 18 anos.
-    - Valor do financiamento ser no máximo 20 vezes a renda mensal.
-    """
-    if idade < 18:
-        return False, "O cliente deve ter mais de 18 anos."
+    # precisa ser maior que 18 (não inclui 18)
+    if idade <= 18:
+        return False, "O cliente precisa ter mais de 18 anos."
 
-    limite_renda = renda * 20
-    if valor > limite_renda:
-        return False, f"O valor solicitado excede o limite de 20x a renda mensal (R$ {limite_renda:,.2f})."
+    # limite de 20x a renda
+    limite = renda * 20
+    if valor > limite:
+        return False, f"Valor acima do permitido (máx: R$ {limite:,.2f})"
 
     return True, "Aprovado"
 
 
 def definir_taxa(parcelas):
-    """
-    Define a taxa de juros mensal com base no número de parcelas.
-    """
+    # define a taxa de acordo com a quantidade de parcelas
     if parcelas <= 6:
-        return 0.05  # 5% ao mês
-    elif 7 <= parcelas <= 12:
-        return 0.08  # 8% ao mês
+        return 0.05
+    elif parcelas <= 12:
+        return 0.08
     else:
-        return 0.10  # 10% ao mês (13 até 24 parcelas)
+        return 0.10
 
 
 def calcular_parcela(valor, taxa, parcelas):
-    """
-    Calcula o valor da parcela (PMT) usando a fórmula da Tabela Price:
-    PMT = PV * [i * (1 + i)^n] / [(1 + i)^n - 1]
-    """
-    # i = taxa, n = parcelas, PV = valor
+    # fórmula da tabela price
     i = taxa
     n = parcelas
-    pv = valor
 
-    numerador = pv * i * math.pow((1 + i), n)
-    denominador = math.pow((1 + i), n) - 1
+    # evita repetir cálculo
+    fator = math.pow(1 + i, n)
 
-    pmt = numerador / denominador
-    return pmt
+    return valor * i * fator / (fator - 1)
 
 
 def calcular_total(parcela, parcelas):
-    """
-    Calcula o valor total pago ao final do financiamento.
-    """
+    # total pago no final
     return parcela * parcelas
 
 
 def calcular_juros(total, valor):
-    """
-    Calcula o total de juros pagos (Total Pago - Valor Inicial).
-    """
+    # quanto foi pago só de juros
     return total - valor
 
 
 def executar_sistema():
-    """
-    Função principal para interação com o usuário.
-    """
     print("=" * 40)
-    print("SISTEMA DE ANÁLISE DE FINANCIAMENTO")
+    print("SISTEMA DE FINANCIAMENTO")
     print("=" * 40)
 
     try:
-        # 1. Coleta de dados
-        nome = input("Nome do cliente: ")
+        # entrada de dados
+        nome = input("Nome: ")
         idade = int(input("Idade: "))
-        renda = float(input("Renda mensal (R$): "))
-        valor_solicitado = float(input("Valor desejado do empréstimo (R$): "))
-        parcelas = int(input("Número de parcelas (3 até 24): "))
+        renda = float(input("Renda mensal: "))
+        valor = float(input("Valor do empréstimo: "))
+        parcelas = int(input("Parcelas (3 a 24): "))
 
-        # Validação do intervalo de parcelas
-        if parcelas < 3 or parcelas > 24:
-            print("\nErro: O número de parcelas deve estar entre 3 e 24.")
+        # valida parcelas
+        if not (3 <= parcelas <= 24):
+            print("Número de parcelas inválido.")
             return
 
-        # 2. Verificação de Aprovação
-        aprovado, motivo = pode_aprovar(idade, renda, valor_solicitado)
+        aprovado, motivo = pode_aprovar(idade, renda, valor)
 
-        print("\n" + "-" * 40)
-        print("RESULTADO DA ANÁLISE")
-        print("-" * 40)
+        print("\n--- RESULTADO ---")
 
         if aprovado:
-            # 3. Definição da Taxa e Cálculos
-            taxa_mensal = definir_taxa(parcelas)
-            valor_parcela = calcular_parcela(valor_solicitado, taxa_mensal, parcelas)
-            valor_total = calcular_total(valor_parcela, parcelas)
-            total_juros = calcular_juros(valor_total, valor_solicitado)
+            taxa = definir_taxa(parcelas)
 
-            # 4. Exibição dos dados aprovados
-            print(f"Status: APROVADO")
+            parcela = calcular_parcela(valor, taxa, parcelas)
+            total = calcular_total(parcela, parcelas)
+            juros = calcular_juros(total, valor)
+
+            print("Status: APROVADO")
             print(f"Cliente: {nome}")
-            print(f"Valor Financiado: R$ {valor_solicitado:,.2f}")
-            print(f"Taxa de Juros: {taxa_mensal * 100:.0f}% ao mês")
-            print(f"Número de Parcelas: {parcelas}")
-            print(f"Valor da Parcela: R$ {valor_parcela:,.2f}")
-            print(f"Valor Total Pago: R$ {valor_total:,.2f}")
-            print(f"Total de Juros Pagos: R$ {total_juros:,.2f}")
+            print(f"Valor: R$ {valor:,.2f}")
+            print(f"Taxa: {taxa*100:.0f}% ao mês")
+            print(f"Parcela: R$ {parcela:,.2f}")
+            print(f"Total pago: R$ {total:,.2f}")
+            print(f"Juros: R$ {juros:,.2f}")
+
         else:
-            print(f"Status: NEGADO")
+            print("Status: NEGADO")
             print(f"Motivo: {motivo}")
 
-        print("=" * 40)
-
     except ValueError:
-        print("\nErro: Por favor, insira valores numéricos válidos para idade, renda e valores.")
+        print("Erro: entrada inválida.")
 
 
 if __name__ == "__main__":
